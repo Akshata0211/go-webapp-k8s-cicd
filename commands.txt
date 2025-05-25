@@ -4,6 +4,7 @@ eksctl create cluster --name demo-cluster --region us-east-1
 
 Install Nginx Ingress Controller on AWS
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.11.1/deploy/static/provider/aws/deploy.yaml
+kubectl get pods -n ingress-nginx
 
 mapped domain to ing ip in /etc/hosts in local system and terminal also.
 edit security grp of ec2 instace , add nodeport ip to allow all traffic
