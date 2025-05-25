@@ -8,10 +8,7 @@ To start the server locally:
 ```bash
 go run main.go
 ```
-Access the website at: http://localhost:8080/
-
-### Looks like this
-![image](https://github.com/ak0211/images/website.png)
+Access the website at: `http://localhost:8080/`
 
 ## DevOps Process
 This project demonstrates how to apply DevOps practices to a go-webapp, including:
@@ -20,7 +17,7 @@ This project demonstrates how to apply DevOps practices to a go-webapp, includin
 - CD with Argo CD on Kubernetes (EKS)
 
 ### Architecture Overview
-![image](https://github.com/ak0211/images/workflow.png)
+![image](https://github.com/Akshata0211/go-webapp-k8s-cicd/blob/main/images/wrokflow.png)
 
 ###  Containerization with Docker
 
@@ -39,7 +36,7 @@ docker push <your-docker-username>/go-web-app
 
 ### Continuous Integration (CI)
 
-Implemented using GitHub Actions.
+#### Implemented using GitHub Actions.
 
 CI Workflow steps:
 - Checkout source code
@@ -54,15 +51,15 @@ Argo CD for GitOps-based CD
 Argo CD syncs Kubernetes apps from a Git repository and automatically deploys them to your EKS cluster.
 
 #### Tool Installation (Required)
-```bash
 #Install the following tools on your system:
+```bash
 # AWS CLI
 # kubectl
 # eksctl
 # helm
 ```
 
-#### Kubernetes Deployment with Helm
+### Kubernetes Deployment with Helm
 
 Create and deploy Helm chart:
 ```bash
@@ -73,12 +70,12 @@ helm install go-web-app ./go-web-app-chart
 helm uninstall go-web-app
 ```
 
-#### Migrate Kubernetes YAML to Helm:
-Copy k8s/manifests/* into go-web-app-chart/templates/, and:
+### Migrate Kubernetes YAML to Helm:
+##### Copy `k8s/manifests/*` into `helm/go-web-app-chart/templates/` and:
 - Replace hardcoded Docker image tag with: {{ .Values.image.tag }}
 - Update values.yaml accordingly
 
-#### EKS Cluster Setup
+### EKS Cluster Setup
 
 ```bash
 #Create an EKS cluster using eksctl:
@@ -86,7 +83,7 @@ eksctl create cluster --name demo-cluster --region us-east-1
 # To delete:
 eksctl delete cluster --name demo-cluster --region us-east-1
 ```
-####  Kubernetes Management
+###  Kubernetes Management
 
 ```bash
 # Apply all manifests
@@ -99,34 +96,34 @@ kubectl get all
 kubectl delete all --all
 ```
 
-#### NGINX Ingress on AWS
+### NGINX Ingress on AWS
 
 ```bash
 #Install Ingress controller:
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.11.1/deploy/static/provider/aws/deploy.yaml
 kubectl get pods -n ingress-nginx
+kubectl get svc -n ingress-nginx
 ```
 
-####  Get Ingress LoadBalancer IP
+###  Get Ingress LoadBalancer IP
 
 ```bash
 #Run the following to retrieve the public IP/hostname:
 nslookup <your-ingress-load-balancer-address>
 ```
 
-##### To access your website domain:
-- Map Domain Locally (Temporary)
-To test before DNS is fully configured:
-- Open /etc/hosts on your local system
-Add an entry like:
+#### To access your website domain:
+- Map Domain Locally (Temporary) to test before DNS is fully configured:
+- Open `/etc/hosts` on your local system
+- Add an entry like:
 ```bash
 <Ingress-IP>   mywebapp.example.com
-#Replace mywebapp.example.com with your custom domain.
+#Replace `mywebapp.example.com` with your custom domain.
 ```
 - Edit EC2 security group to allow NodePort traffic for testing
-- Access via: http://<eks-node-external-ip>:<nodeport>
+- Access via: `http://<eks-node-external-ip>:<nodeport>`
 
-#### Argo CD Setup
+### Argo CD Setup
 
 ```bash
 #Install Argo CD
@@ -143,9 +140,9 @@ kubectl get secret argocd-initial-admin-secret -n argocd -o yaml
 echo <base64-password> | base64 --decode
 ```
 
-#### Connect Your Git Repo to Argo CD
+### Connect Your Git Repo to Argo CD
 
-In Argo CD UI:
+##### In Argo CD UI:
 - Create a new application
 - Set sync policy to Automatic and enable Self-Heal
 - Use the Git repo as source
