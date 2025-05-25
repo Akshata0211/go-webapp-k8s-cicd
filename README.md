@@ -16,7 +16,7 @@ This project demonstrates how to apply DevOps practices to a go-webapp, includin
 - CI with GitHub Actions
 - CD with Argo CD on Kubernetes (EKS)
 
-### Architecture Overview
+### Summary Diagram
 ![image](https://github.com/Akshata0211/go-webapp-k8s-cicd/blob/main/images/wrokflow.png)
 
 ###  Containerization with Docker
@@ -35,7 +35,6 @@ docker push <your-docker-username>/go-web-app
 ```
 
 ### Continuous Integration (CI)
-
 #### Implemented using GitHub Actions.
 
 CI Workflow steps:
@@ -71,6 +70,7 @@ helm uninstall go-web-app
 ```
 
 ### Migrate Kubernetes YAML to Helm:
+
 ##### Copy `k8s/manifests/*` into `helm/go-web-app-chart/templates/` and:
 - Replace hardcoded Docker image tag with: {{ .Values.image.tag }}
 - Update values.yaml accordingly
@@ -114,11 +114,11 @@ nslookup <your-ingress-load-balancer-address>
 
 #### To access your website domain:
 - Map Domain Locally (Temporary) to test before DNS is fully configured:
-- Open `/etc/hosts` on your local system
+- Open `sudo vim /etc/hosts` to edit hosts file
 - Add an entry like:
 ```bash
 <Ingress-IP>   mywebapp.example.com
-#Replace `mywebapp.example.com` with your custom domain.
+#Replace mywebapp.example.com with your custom domain.
 ```
 - Edit EC2 security group to allow NodePort traffic for testing
 - Access via: `http://<eks-node-external-ip>:<nodeport>`
@@ -146,7 +146,7 @@ echo <base64-password> | base64 --decode
 - Create a new application
 - Set sync policy to Automatic and enable Self-Heal
 - Use the Git repo as source
-- Provide path: helm/go-web-app-chart to point to your Helm chart
+- Provide path: `helm/go-web-app-chart` to point to your Helm chart
 
 #### Notes
 
