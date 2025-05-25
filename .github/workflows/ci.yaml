@@ -50,8 +50,8 @@ jobs:
     - name: Run golangci-lint
       uses: golangci/golangci-lint-action@v6
       with:
-        version: v1.57.1  # or latest compatible version
-
+        version: v1.59.0  # or latest compatible version
+        skip-cache: true
   push:
     runs-on: ubuntu-latest
     needs: build
